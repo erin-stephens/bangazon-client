@@ -14,7 +14,7 @@ const getSingleProduct = (id) => new Promise((resolve, reject) => {
     .catch(reject);
 });
 
-const addProductToCart = (productId) => new Promise((resolve, reject) => {
+const addProductToCart = (productId, orderId) => new Promise((resolve, reject) => {
   fetch(`${clientCredentials.databaseURL}/products/${productId}/addtocart`, {
     method: 'POST',
     body: JSON.stringify(),
@@ -27,7 +27,7 @@ const addProductToCart = (productId) => new Promise((resolve, reject) => {
     .catch(reject);
 });
 
-const removeProductFromCart = (productId) => new Promise((resolve, reject) => {
+const removeProductFromCart = (productId, orderId) => new Promise((resolve, reject) => {
   fetch(`${clientCredentials.databaseURL}/products/${productId}/remove`, {
     method: 'DELETE',
     headers: {
