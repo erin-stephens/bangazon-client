@@ -15,11 +15,13 @@ export default function ProductsHome() {
   return (
     <div>
       <h2>View All Products</h2>
-      {products.map((product) => (
-        <section key={`product--${product.id}`} className="products">
-          <ProductCard productObj={product} onUpdate={getAllProducts} />
-        </section>
-      ))}
+      <div className="productIndex">
+        {products.map((product) => (
+          <section key={`product--${product.id}`} className="products">
+            <ProductCard productObj={product} onUpdate={getAllProducts} />
+          </section>
+        ))}
+      </div>
     </div>
   );
 }

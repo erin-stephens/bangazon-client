@@ -15,10 +15,11 @@ export default function ViewProduct() {
   return (
     <div>
       <img src={productDetails.image_url} alt={productDetails.title} />
-      <h2>{productDetails.title}</h2>
-      <h4>{productDetails.description}</h4>
-      <h4>{productDetails.price}</h4>
-      <h4>{productDetails.category}</h4>
+      <h2>Title: {productDetails.title}</h2>
+      <h4>Description: {productDetails.description}</h4>
+      <h4>Price: {productDetails.price}</h4>
+      <h4>Category: {productDetails.category?.label}</h4>
+      <h4>Seller: {productDetails.seller?.first_name} {productDetails.seller?.last_name}</h4>
 
     </div>
   );
