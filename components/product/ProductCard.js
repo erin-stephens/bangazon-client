@@ -2,9 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Card, Button } from 'react-bootstrap';
 import Link from 'next/link';
-import { addProductToCart, removeProductFromCart } from '../../utils/data/productData';
+import { addProductToCart, deleteProduct, removeProductFromCart } from '../../utils/data/productData';
 
 export default function ProductCard({ productObj, onUpdate }) {
+  const deleteThisProduct = () => {
+    if (window.confirm(`Delete ${productObj.title}?`)) {
+      deleteProduct(productObj.id).then(() => onUpdate());
+    }
+  };
   const add = () => {
     addProductToCart(productObj.id).then(() => onUpdate());
   };
@@ -21,6 +26,7 @@ export default function ProductCard({ productObj, onUpdate }) {
         <Link href={`/products/${productObj.id}`} passHref>
           <Button variant="primary">Product Details</Button>
         </Link>
+        <Button variant="primary" onClick={deleteThisProduct}>Delete</Button>
         {productObj.added ? <Button onClick={remove}>Remove from Cart</Button> : <Button onClick={add}>Add to Cart</Button>}
       </Card.Body>
     </Card>
