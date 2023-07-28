@@ -49,7 +49,17 @@ const updateOrder = (order) => new Promise((resolve, reject) => {
     .catch(reject);
 });
 
-const checkOrder = () => {};
+const checkOrder = (id, payload) => new Promise((resolve, reject) => {
+  fetch(`${clientCredentials.databaseURL}/orders/${id}/check_order`, {
+    method: 'POST',
+    body: JSON.stringify(payload),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+    .then((response) => resolve(response.json()))
+    .catch(reject);
+});
 
 export {
   getOrders,

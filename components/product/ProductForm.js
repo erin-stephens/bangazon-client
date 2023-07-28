@@ -10,7 +10,7 @@ const initialState = {
   description: '',
   quantity: 0,
   price: 0,
-  categoryId: '',
+  category: 0,
   seller: '',
   imageUrl: '',
 };
@@ -30,7 +30,7 @@ export default function ProductForm({ obj }) {
         description: obj.description,
         quantity: obj.quantity,
         price: obj.price,
-        categoryId: obj.category_id?.id,
+        category: obj.category?.id,
         imageUrl: obj.image_url,
       });
     }
@@ -51,9 +51,9 @@ export default function ProductForm({ obj }) {
         id: obj.id,
         title: currentProduct.title,
         description: currentProduct.description,
-        quantity: currentProduct.quantity,
-        price: currentProduct.price,
-        categoryId: currentProduct.categoryId,
+        quantity: Number(currentProduct.quantity),
+        price: Number(currentProduct.price),
+        category: Number(currentProduct.category),
         userId: user.uid,
         imageUrl: currentProduct.imageUrl,
       };
@@ -62,9 +62,9 @@ export default function ProductForm({ obj }) {
       const product = {
         title: currentProduct.title,
         description: currentProduct.description,
-        quantity: currentProduct.quantity,
-        price: currentProduct.price,
-        categoryId: currentProduct.categoryId,
+        quantity: Number(currentProduct.quantity),
+        price: Number(currentProduct.price),
+        category: Number(currentProduct.category),
         userId: user.uid,
         imageUrl: currentProduct.imageUrl,
       };
@@ -99,6 +99,16 @@ export default function ProductForm({ obj }) {
             required
           />
         </FloatingLabel>
+        <FloatingLabel controlId="floatingInput3" label="imageUrl" className="mb-3">
+          <Form.Control
+            type="text"
+            placeholder="Enter image url"
+            name="imageUrl"
+            value={currentProduct.imageUrl}
+            onChange={handleChange}
+            required
+          />
+        </FloatingLabel>
         <FloatingLabel controlId="floatingInput3" label="price" className="mb-3">
           <Form.Control
             type="number"
@@ -112,10 +122,10 @@ export default function ProductForm({ obj }) {
         <FloatingLabel controlId="floatingSelect">
           <Form.Select
             aria-label="category"
-            name="categoryId"
+            name="category"
             onChange={handleChange}
             className="mb-3"
-            value={currentProduct.categoryId}
+            value={currentProduct.category}
             required
           >
             <option value="">Select a Category</option>
@@ -147,7 +157,7 @@ ProductForm.propTypes = {
     description: PropTypes.string,
     quantity: PropTypes.number,
     price: PropTypes.number,
-    category_id: PropTypes.shape({
+    category: PropTypes.shape({
       id: PropTypes.number,
     }),
     seller: PropTypes.string,

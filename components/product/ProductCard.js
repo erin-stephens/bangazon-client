@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Card, Button } from 'react-bootstrap';
-import Link from 'next/link';
+import { Card, Button, Dropdown } from 'react-bootstrap';
 import { addProductToCart, deleteProduct, removeProductFromCart } from '../../utils/data/productData';
 
 export default function ProductCard({ productObj, onUpdate }) {
@@ -23,10 +22,16 @@ export default function ProductCard({ productObj, onUpdate }) {
         <Card.Title>{productObj.title}</Card.Title>
         <Card.Text>{productObj.price}</Card.Text>
         <Card.Text>{productObj.seller.first_name}</Card.Text>
-        <Link href={`/products/${productObj.id}`} passHref>
-          <Button variant="primary">Product Details</Button>
-        </Link>
-        <Button variant="primary" onClick={deleteThisProduct}>Delete</Button>
+        <Dropdown>
+          <Dropdown.Toggle className="dropdownBtn">
+            Options
+          </Dropdown.Toggle>
+          <Dropdown.Menu>
+            <Dropdown.Item href={`/products/${productObj.id}`}>View Details</Dropdown.Item>
+            <Dropdown.Item href={`/products/edit/${productObj.id}`}>Edit</Dropdown.Item>
+            <Dropdown.Item onClick={deleteThisProduct}>Delete</Dropdown.Item>
+          </Dropdown.Menu>
+        </Dropdown>
         {productObj.added ? <Button onClick={remove}>Remove from Cart</Button> : <Button onClick={add}>Add to Cart</Button>}
       </Card.Body>
     </Card>

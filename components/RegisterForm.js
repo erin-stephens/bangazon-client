@@ -3,6 +3,7 @@ import { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { registerUser } from '../utils/auth'; // Update with path to registerUser
+import { createOrder } from '../utils/data/orderData';
 
 function RegisterForm({ user, updateUser }) {
   const [formInput, setFormInput] = useState({
@@ -25,6 +26,13 @@ function RegisterForm({ user, updateUser }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     registerUser(formInput).then(() => updateUser(user.uid));
+    const openOrder = {
+      customerId: user.uid,
+      completed: false,
+      total: 0,
+      paymentType: '',
+    };
+    createOrder(openOrder);
   };
 
   return (
