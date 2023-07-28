@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
+import { useAuth } from '../../utils/context/authContext';
 import OrderCard from '../../components/order/OrderCard';
-import { getOrders } from '../../utils/data/orderData';
+import { getUserOrders } from '../../utils/data/orderData';
 
 export default function OrderIndex() {
   const [orders, setOrders] = useState([]);
+  const { user } = useAuth();
 
   const getAllOrders = () => {
-    getOrders().then(setOrders);
+    getUserOrders(user.id).then(setOrders);
   };
 
   useEffect(() => {

@@ -1,15 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Button } from 'react-bootstrap';
-import { createOrder } from '../../utils/data/orderData';
+import { useAuth } from '../../utils/context/authContext';
+import { addProductToCart } from '../../utils/data/productData';
+import { getUserOrders } from '../../utils/data/orderData';
 
-export default function AddCartButton({ productId }) {
+export default function AddCartButton({ id }) {
+  const { user } = useAuth();
+  const [order, setOrder] = useState({});
+
   const addToCart = () => {
-    const purchase = {
-      orderId: '',
-      productId,
+    getUserOrders(user.id).then(setOrder);
+    const payload = {
+      orderId: Number(order.id),
+      productId: Number(id),
     };
-    createOrder(purchase);
+    addProductToCart(id, payload);
   };
 
   return (
@@ -18,5 +24,5 @@ export default function AddCartButton({ productId }) {
 }
 
 AddCartButton.propTypes = {
-  productId: PropTypes.number.isRequired,
+  id: PropTypes.number.isRequired,
 };

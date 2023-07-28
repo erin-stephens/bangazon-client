@@ -49,10 +49,10 @@ const updateProduct = (product) => new Promise((resolve, reject) => {
     .catch(reject);
 });
 
-const addProductToCart = (productId) => new Promise((resolve, reject) => {
+const addProductToCart = (productId, payload) => new Promise((resolve, reject) => {
   fetch(`${clientCredentials.databaseURL}/products/${productId}/addtocart`, {
     method: 'POST',
-    body: JSON.stringify(),
+    body: JSON.stringify(payload),
     headers: {
       'Content-Type': 'application/json',
     },

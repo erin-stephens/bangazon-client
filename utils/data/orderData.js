@@ -7,6 +7,13 @@ const getOrders = () => new Promise((resolve, reject) => {
     .catch(reject);
 });
 
+const getUserOrders = (id) => new Promise((resolve, reject) => {
+  fetch(`${clientCredentials.databaseURL}/orders?customer_id=${id}`)
+    .then((response) => response.json())
+    .then(resolve)
+    .catch(reject);
+});
+
 const getSingleOrder = (id) => new Promise((resolve, reject) => {
   fetch(`${clientCredentials.databaseURL}/orders/${id}`)
     .then((response) => response.json())
@@ -63,6 +70,7 @@ const checkOrder = (id, payload) => new Promise((resolve, reject) => {
 
 export {
   getOrders,
+  getUserOrders,
   getSingleOrder,
   createOrder,
   deleteOrder,
