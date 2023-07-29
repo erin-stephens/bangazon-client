@@ -68,6 +68,13 @@ const checkOrder = (id, payload) => new Promise((resolve, reject) => {
     .catch(reject);
 });
 
+const getOpenOrderByUser = (id) => new Promise((resolve, reject) => {
+  fetch(`${clientCredentials.databaseURL}/users/${id}/getorder`)
+    .then((response) => response.json())
+    .then(resolve)
+    .catch(reject);
+});
+
 export {
   getOrders,
   getUserOrders,
@@ -76,4 +83,5 @@ export {
   deleteOrder,
   updateOrder,
   checkOrder,
+  getOpenOrderByUser,
 };
