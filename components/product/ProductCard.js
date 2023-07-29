@@ -21,7 +21,7 @@ export default function ProductCard({ productObj, onUpdate }) {
       <Card.Body>
         <Card.Title>{productObj.title}</Card.Title>
         <Card.Text>{productObj.price}</Card.Text>
-        <Card.Text>{productObj.seller.first_name}</Card.Text>
+        <Card.Text>{productObj.category.label}</Card.Text>
         <Dropdown>
           <Dropdown.Toggle className="dropdownBtn">
             Options
@@ -42,6 +42,9 @@ ProductCard.propTypes = {
     id: PropTypes.number,
     title: PropTypes.string,
     price: PropTypes.number,
+    category: PropTypes.shape({
+      label: PropTypes.string,
+    }),
     seller: PropTypes.shape({
       first_name: PropTypes.string,
       last_name: PropTypes.string,

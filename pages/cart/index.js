@@ -1,32 +1,44 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../utils/context/authContext';
-import OrderCard from '../../components/order/OrderCard';
-import { getUserOrders } from '../../utils/data/orderData';
+import { getOpenOrderByUser, getOrdersProducts } from '../../utils/data/orderData';
+import OrderProductCard from '../../components/orderProduct/OrderProductCard';
+import CartCheckoutForm from '../../components/cart/CartCheckoutForm';
 
 export default function OrderIndex() {
-  const [orders, setOrders] = useState([]);
+  const [orders, setOrders] = useState({});
+  const [orderProducts, setOrderProducts] = useState([]);
   const { user } = useAuth();
 
-  const getAllOrders = () => {
-    getUserOrders(user.id).then(setOrders);
+  const getOpenOrders = async () => {
+    const userOrders = await getOpenOrderByUser(user.id);
+    setOrders(userOrders);
+    console.warn(userOrders);
+    console.warn(userOrders.id);
+  };
+
+  const getProductsByOrder = async () => {
+    const products = await getOrdersProducts(orders.id);
+    setOrderProducts(products);
+    console.warn(products);
   };
 
   useEffect(() => {
-    getAllOrders();
-    console.warn(orders);
-  }, []);
+    getOpenOrders();
+    getProductsByOrder();
+  }, [user.id, orders.id]);
 
   return (
     <div>
       <h1>Orders</h1>
-      {orders.map((order) => (
-        <section
-          key={`order--${order.id}`}
-          className="order"
-        >
-          <OrderCard orderObj={order} onUpdate={getAllOrders} />
-        </section>
-      ))}
+      <h1>Total: {orders.total} </h1>
+      <CartCheckoutForm obj={orders} />
+      <div>
+        {orderProducts.map((orderProduct) => (
+          <section key={`orderProduct--${orderProduct.id}`} className="orderProducts">
+            <OrderProductCard orderProductObj={orderProduct} onUpdate={getProductsByOrder} />
+          </section>
+        ))}
+      </div>
     </div>
   );
 }
