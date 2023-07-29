@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Card, Button, Dropdown } from 'react-bootstrap';
-import { addProductToCart, deleteProduct, removeProductFromCart } from '../../utils/data/productData';
+import { Card, Dropdown } from 'react-bootstrap';
+import { deleteProduct } from '../../utils/data/productData';
 
 export default function ProductCard({ productObj, onUpdate }) {
   const deleteThisProduct = () => {
@@ -9,19 +9,19 @@ export default function ProductCard({ productObj, onUpdate }) {
       deleteProduct(productObj.id).then(() => onUpdate());
     }
   };
-  const add = () => {
+  /* const add = () => {
     addProductToCart(productObj.id).then(() => onUpdate());
   };
   const remove = () => {
     removeProductFromCart(productObj.id).then(() => onUpdate());
-  };
+  }; */
   return (
     <Card style={{ width: '18rem' }} className="productCard">
       <Card.Img variant="top" src={productObj.image_url} />
       <Card.Body>
         <Card.Title>{productObj.title}</Card.Title>
         <Card.Text>{productObj.price}</Card.Text>
-        <Card.Text>{productObj.seller.first_name}</Card.Text>
+        <Card.Text>{productObj.category.label}</Card.Text>
         <Dropdown>
           <Dropdown.Toggle className="dropdownBtn">
             Options
@@ -32,7 +32,6 @@ export default function ProductCard({ productObj, onUpdate }) {
             <Dropdown.Item onClick={deleteThisProduct}>Delete</Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
-        {productObj.added ? <Button onClick={remove}>Remove from Cart</Button> : <Button onClick={add}>Add to Cart</Button>}
       </Card.Body>
     </Card>
   );
@@ -43,6 +42,9 @@ ProductCard.propTypes = {
     id: PropTypes.number,
     title: PropTypes.string,
     price: PropTypes.number,
+    category: PropTypes.shape({
+      label: PropTypes.string,
+    }),
     seller: PropTypes.shape({
       first_name: PropTypes.string,
       last_name: PropTypes.string,

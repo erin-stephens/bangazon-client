@@ -28,8 +28,8 @@ export default function ProductForm({ obj }) {
         id: obj.id,
         title: obj.title,
         description: obj.description,
-        quantity: obj.quantity,
-        price: obj.price,
+        quantity: Number(obj.quantity),
+        price: Number(obj.price),
         category: obj.category?.id,
         imageUrl: obj.image_url,
       });

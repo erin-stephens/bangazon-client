@@ -2,29 +2,25 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Button } from 'react-bootstrap';
 import { useAuth } from '../../utils/context/authContext';
-import { addProductToCart } from '../../utils/data/productData';
+import { removeProductFromCart } from '../../utils/data/productData';
 import { getOpenOrderByUser } from '../../utils/data/orderData';
 
-export default function AddCartButton({ id }) {
+export default function RemoveFromCartButton({ id }) {
   const { user } = useAuth();
   const [, setOrder] = useState({});
 
-  const addToCart = () => {
+  const removeFromCart = () => {
     getOpenOrderByUser(user.id).then((userOrders) => {
       setOrder(userOrders);
-      const payload = {
-        orderId: Number(userOrders.id),
-        productId: Number(id),
-      };
-      addProductToCart(id, payload);
+      removeProductFromCart(id);
     });
   };
 
   return (
-    <Button onClick={addToCart}>Add To Cart</Button>
+    <Button onClick={removeFromCart}>Remove from Cart</Button>
   );
 }
 
-AddCartButton.propTypes = {
+RemoveFromCartButton.propTypes = {
   id: PropTypes.number.isRequired,
 };

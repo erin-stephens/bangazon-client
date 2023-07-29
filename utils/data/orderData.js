@@ -7,6 +7,13 @@ const getOrders = () => new Promise((resolve, reject) => {
     .catch(reject);
 });
 
+const getUserOrders = (id) => new Promise((resolve, reject) => {
+  fetch(`${clientCredentials.databaseURL}/orders?customer_id=${id}`)
+    .then((response) => response.json())
+    .then(resolve)
+    .catch(reject);
+});
+
 const getSingleOrder = (id) => new Promise((resolve, reject) => {
   fetch(`${clientCredentials.databaseURL}/orders/${id}`)
     .then((response) => response.json())
@@ -49,23 +56,27 @@ const updateOrder = (order) => new Promise((resolve, reject) => {
     .catch(reject);
 });
 
-const checkOrder = (id, payload) => new Promise((resolve, reject) => {
-  fetch(`${clientCredentials.databaseURL}/orders/${id}/check_order`, {
-    method: 'POST',
-    body: JSON.stringify(payload),
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  })
-    .then((response) => resolve(response.json()))
+const getOrdersProducts = (id) => new Promise((resolve, reject) => {
+  fetch(`${clientCredentials.databaseURL}/orders/${id}/get_products`)
+    .then((response) => response.json())
+    .then(resolve)
+    .catch(reject);
+});
+
+const getOpenOrderByUser = (id) => new Promise((resolve, reject) => {
+  fetch(`${clientCredentials.databaseURL}/users/${id}/getorder`)
+    .then((response) => response.json())
+    .then(resolve)
     .catch(reject);
 });
 
 export {
   getOrders,
+  getUserOrders,
   getSingleOrder,
   createOrder,
   deleteOrder,
   updateOrder,
-  checkOrder,
+  getOrdersProducts,
+  getOpenOrderByUser,
 };
